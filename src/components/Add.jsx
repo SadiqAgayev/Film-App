@@ -5,32 +5,41 @@ const Add = () => {
   let [data, setData] = useState([]);
 
   useEffect(() => {
-   if (query.length) {
-    fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=25fcdc88a9e8c6ac8725c01af2cc2530&language=pt-BR&query=${query}`
-    )
-      .then((resp) => resp.json())
-      .then((respData) => {
-        setData(respData.results)
-      });
-   }
-  },[query])
+    if (query.length) {
+      fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMBD_KEY}&language=pt-BR&query=${query}`
+      )
+        .then((resp) => resp.json())
+        .then((respData) => {
+          setData(respData.results);
+        });
+    }
+  }, [query]);
 
-  useEffect(() => console.log(data), [data])
+  // useEffect(() => console.log(data), [data])
 
   function onChange(e) {
     setQuery(e.target.value);
-    console.log(query)
-
-    
+    // console.log(query)
   }
   return (
     <div className="add-page">
       <div className="container">
         <div>
-          { data?.length ? data?.map((d) => {
-          return <img src={`http://image.tmdb.org/t/p/w500${d.poster_path}`} alt="" key={d.id} style={{width:"100px",height:"100px"}}/>;
-        }) : <p>loading</p>}
+          {data?.length ? (
+            data?.map((d) => {
+              return (
+                <img
+                  src={`http://image.tmdb.org/t/p/w500${d.poster_path}`}
+                  alt=""
+                  key={d.id}
+                  style={{ width: "100px", height: "100px" }}
+                />
+              );
+            })
+          ) : (
+            <p>loading</p>
+          )}
         </div>
         <div className="add-content">
           {}
@@ -55,6 +64,10 @@ const Add = () => {
             />
           </div>
         </div>
+        {console.log(data)}
+        {data?.map((d) => {
+          return <h2>{d.title}</h2>;
+        })}
       </div>
     </div>
   );
