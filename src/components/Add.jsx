@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ResultCart from "./ResultCart";
 
 const Add = () => {
   let [query, setQuery] = useState("");
@@ -25,27 +26,11 @@ const Add = () => {
   return (
     <div className="add-page">
       <div className="container">
-        <div>
-          {data?.length ? (
-            data?.map((d) => {
-              return (
-                <img
-                  src={`http://image.tmdb.org/t/p/w500${d.poster_path}`}
-                  alt=""
-                  key={d.id}
-                  style={{ width: "100px", height: "100px" }}
-                />
-              );
-            })
-          ) : (
-            <p>loading</p>
-          )}
-        </div>
         <div className="add-content">
           {}
           <img
             src="https://www.cinemaplus.az/site/assets/files/1083/6.jpg"
-            style={{ height: "333px", opacity: 0.9 }}
+            style={{ height: "100%", opacity: 0.9 }}
             alt=""
           />
           <div className="titles">
@@ -64,10 +49,19 @@ const Add = () => {
             />
           </div>
         </div>
-        {console.log(data)}
-        {data?.map((d) => {
-          return <h2>{d.title}</h2>;
-        })}
+        <ul type="none">
+          {data?.length ? (
+            data?.map((movie) => {
+              return (
+                <li key={movie.id}>
+                  <ResultCart movie={movie} />
+                </li>
+              );
+            })
+          ) : (
+            <p>Loading...</p>
+          )}
+        </ul>
       </div>
     </div>
   );
