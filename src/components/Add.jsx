@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../context/GlobalState";
 import ResultCart from "./ResultCart";
 
 const Add = () => {
+
+  const {sadiq} = useContext(GlobalContext)
+
   let [query, setQuery] = useState("");
   let [data, setData] = useState([]);
 
   useEffect(() => {
     if (query.length) {
       fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMBD_KEY}&language=pt-BR&query=${query}`
+        `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMBD_KEY}&language=en-EN&query=${query}`
       )
         .then((resp) => resp.json())
         .then((respData) => {
@@ -39,6 +43,7 @@ const Add = () => {
               Millions of movies and TV shows and people to discover. Discover
               now.
             </h2>
+            <h3>{sadiq}</h3>
           </div>
           <div className="input-wrapper">
             <input
